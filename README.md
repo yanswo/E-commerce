@@ -49,9 +49,6 @@ O projeto estará disponível em `http://localhost:3000`.
 4. Faça o push para a branch (`git push origin feature/nome-da-feature`).
 5. Abra um pull request.
 
-## Licença
-
-Este projeto é licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## Agradecimentos
 
