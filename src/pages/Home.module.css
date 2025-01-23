@@ -1,0 +1,21 @@
+.HomeContainer {
+  text-align: center;
+}
+
+.produtos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.produto {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.produto img {
+  max-width: 30%;
+  height: auto;
+}
