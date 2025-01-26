@@ -9,14 +9,45 @@ const cartReducer = (state, action) => {
       const itemExistente = state.find((item) => item.id === action.payload.id);
 
       if (itemExistente) {
-        return state;
+        return state.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                quantidade: item.quantidade + 1,
+              }
+            : item
+        );
       }
 
-      return [...state, action.payload];
+      return [...state, { ...action.payload, quantidade: 1 }];
     }
 
-    case "REMOVE_FROM_CART": {
+    case "REMOVE_FROM_CART":
       return state.filter((item) => item.id !== action.payload.id);
+
+    case "CLEAR_CART":
+      return [];
+
+    case "INCREASE_QUANTITY":
+      return state.map((item) =>
+        item.id === action.payload.id
+          ? { ...item, quantidade: item.quantidade + 1 }
+          : item
+      );
+
+    case "DECREASE_QUANTITY":
+      return state.map((item) =>
+        item.id === action.payload.id && item.quantidade > 1
+          ? { ...item, quantidade: item.quantidade - 1 }
+          : item
+      );
+
+    case "UPDATE_STOCK": {
+      return state.map((item) =>
+        item.id === action.payload.id
+          ? { ...item, estoque: item.estoque - 1 }
+          : item
+      );
     }
 
     default:

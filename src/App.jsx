@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
-
+import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Home from "./pages/Home";
+import Finalizacao from "./pages/Finalizacao";
+import Historico from "./pages/Historico";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/finalizacao" element={<Finalizacao />} />
+          <Route path="/historico" element={<Historico />} />
         </Routes>
       </Router>
     </CartProvider>
