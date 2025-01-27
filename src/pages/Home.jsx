@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import CartContext from "../context/CartContext";
 import styles from "./Home.module.css";
+import CartDropdown from "../components/CartDropdown";
 
 function Home() {
   const { dispatch } = useContext(CartContext);
@@ -73,7 +74,9 @@ function Home() {
         </nav>
         <div className={styles.searchCart}>
           <input type="text" placeholder="Buscar produtos" />
-          <div className={styles.cartIcon}>🛒</div>
+          <div className={styles.cartIcon}>
+            <CartDropdown>🛒</CartDropdown>
+          </div>
         </div>
       </header>
 

@@ -1,67 +1,148 @@
-.CheckoutContainer {
-  width: 80%;
+.checkoutContainer {
+  padding: 20px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
-  background-color: #f9f9f9;
+  font-family: "Arial", sans-serif;
+  background-color: #f8f9fa;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.CheckoutContainer h1 {
+.checkoutTitulo {
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.checkoutResumo {
+  margin-bottom: 30px;
+}
+
+.checkoutItens {
+  margin-top: 20px;
+}
+
+.checkoutItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkoutItemImagem {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.checkoutItemDetalhes {
+  flex-grow: 1;
+  margin-left: 15px;
+}
+
+.checkoutItemNome {
+  font-size: 18px;
   color: #333;
 }
 
-.produto {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.produto img {
-  width: 100px;
-  height: auto;
-  border-radius: 8px;
-}
-
-.produto h2 {
-  font-size: 1.5rem;
-  color: #444;
-}
-
-.produto p {
-  font-size: 1.2rem;
+.checkoutItemQuantidade,
+.checkoutItemPreco,
+.checkoutItemSubtotal {
+  font-size: 14px;
   color: #666;
 }
 
-.finalizarCompra {
-  background-color: #27ae60;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1.2rem;
-  display: block;
-  margin: 2rem auto;
-}
-
-.finalizarCompra:hover {
-  background-color: #229954;
-}
-
-.total {
-  font-size: 1.8rem;
-  font-weight: bold;
+.checkoutTotal {
+  font-size: 22px;
   text-align: right;
-  margin-top: 1.5rem;
+  margin-top: 20px;
   color: #333;
+  font-weight: bold;
+}
+
+.checkoutBotaoAvancar {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.checkoutBotaoAvancar:hover {
+  background-color: #0056b3;
+}
+
+.checkoutPagamento {
+  margin-top: 30px;
+}
+
+.checkoutForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkoutFormCampo {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkoutFormLabel {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.checkoutFormInput {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.checkoutFormInput:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.checkoutErro {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.checkoutBotaoFinalizar {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.checkoutBotaoFinalizar:hover {
+  background-color: #0056b3;
+}
+
+.checkoutSucesso {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.checkoutMensagem {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
 }
