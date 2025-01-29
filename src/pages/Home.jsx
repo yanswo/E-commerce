@@ -1,60 +1,36 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartContext from "../context/CartContext";
 import styles from "./Home.module.css";
 import CartDropdown from "../components/CartDropdown";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
   const { dispatch } = useContext(CartContext);
+  const [produtos, setProdutos] = useState([]);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const produtos = [
-    {
-      id: 1,
-      nome: "Camiseta",
-      preco: 50,
-      imagem: "https://placehold.co/600x400",
-      estoque: 23,
-    },
-    {
-      id: 2,
-      nome: "Tênis",
-      preco: 200,
-      imagem: "https://placehold.co/600x400",
-      estoque: 55,
-    },
-    {
-      id: 3,
-      nome: "Moletom",
-      preco: 130,
-      imagem: "https://placehold.co/600x400",
-      estoque: 43,
-    },
-    {
-      id: 4,
-      nome: "Jaqueta de Couro",
-      preco: 300,
-      imagem: "https://placehold.co/600x400",
-      estoque: 10,
-    },
-    {
-      id: 5,
-      nome: "Boné",
-      preco: 40,
-      imagem: "https://placehold.co/600x400",
-      estoque: 34,
-    },
-    {
-      id: 6,
-      nome: "Óculos de Sol",
-      preco: 150,
-      imagem: "https://placehold.co/600x400",
-      estoque: 109,
-    },
-  ];
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/produtos");
+        if (!response.ok) {
+          throw new Error("Erro ao carregar produtos");
+        }
+        const data = await response.json();
+        setProdutos(data);
+      } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+      }
+    };
+
+    fetchProdutos();
+  }, []);
 
   const adicionarAoCarrinho = (produto) => {
-    if (produto.estoque > 0) {
+    if (produto.disponibilidade) {
       dispatch({ type: "ADD_TO_CART", payload: produto });
-      dispatch({ type: "UPDATE_STOCK", payload: produto });
     } else {
       alert("Produto fora de estoque");
     }
@@ -72,6 +48,27 @@ function Home() {
             <li>Contato</li>
           </ul>
         </nav>
+
+        {/* Seção de Autenticação */}
+        <div className={styles.authSection}>
+          {user ? (
+            <div className={styles.userInfo}>
+              <span>Olá, {user.nome}</span>
+              <button onClick={() => navigate("/historico")}>
+                Minha Conta
+              </button>
+              <button onClick={logout}>Sair</button>
+            </div>
+          ) : (
+            <button
+              className={styles.loginButton}
+              onClick={() => navigate("/login")}
+            >
+              Entrar/Cadastrar
+            </button>
+          )}
+        </div>
+
         <div className={styles.searchCart}>
           <input type="text" placeholder="Buscar produtos" />
           <div className={styles.cartIcon}>
@@ -105,9 +102,9 @@ function Home() {
               />
               <h3>{produto.nome}</h3>
               <p>R$ {produto.preco}</p>
-              <p>Estoque: {produto.estoque}</p>
+              <p>{produto.disponibilidade ? "Disponível" : "Indisponível"}</p>
               <button onClick={() => adicionarAoCarrinho(produto)}>
-                {produto.estoque > 0
+                {produto.disponibilidade
                   ? "Adicionar ao Carrinho"
                   : "Produto Indisponível"}
               </button>

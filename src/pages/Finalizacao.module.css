@@ -1,0 +1,71 @@
+/* Animação de "pulinho" do ícone */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.finalizacaoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.finalizacaoCard {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.iconContainer {
+  margin-bottom: 20px;
+}
+
+.checkIcon {
+  color: #4caf50;
+  width: 60px;
+  height: 60px;
+  animation: bounce 0.5s ease-in-out;
+}
+
+.finalizacaoTitulo {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.finalizacaoMensagem {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.finalizacaoBotao {
+  padding: 12px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.finalizacaoBotao:hover {
+  background-color: #45a049;
+}
+
+.finalizacaoBotao:focus {
+  outline: none;
+}

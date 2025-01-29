@@ -1,0 +1,65 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "nome": "Camisa",
+      "descricao": "Descrição do Produto A",
+      "preco": 99.99,
+      "imagem": "https://placehold.co/600x400",
+      "disponibilidade": true,
+      "categoria": "Roupas"
+    },
+    {
+      "id": 2,
+      "nome": "Moletom",
+      "descricao": "Descrição do Produto B",
+      "preco": 149.99,
+      "imagem": "https://placehold.co/600x400",
+      "disponibilidade": true,
+      "categoria": "Roupas"
+    },
+    {
+      "id": 3,
+      "nome": "Tênis",
+      "descricao": "Descrição do Produto C",
+      "preco": 199.99,
+      "imagem": "https://placehold.co/600x400",
+      "disponibilidade": true,
+      "categoria": "Calçados"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "Gestor",
+      "email": "admin@super.com",
+      "senha": "superadmin"
+    },
+    {
+      "id": "a4ba",
+      "nome": "Yan",
+      "email": "yan@teste.com",
+      "senha": "12345"
+    }
+  ],
+  "historico": [
+    {
+      "id": 1,
+      "usuarioId": "a4ba",
+      "data": "2023-10-25T12:00:00Z",
+      "produtos": [
+        {
+          "produtoId": 1,
+          "quantidade": 2,
+          "precoUnitario": 99.99
+        },
+        {
+          "produtoId": 3,
+          "quantidade": 1,
+          "precoUnitario": 199.99
+        }
+      ],
+      "total": 399.97
+    }
+  ]
+}

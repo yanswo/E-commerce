@@ -12,11 +12,34 @@ function Checkout() {
   const [codigoSeguranca, setCodigoSeguranca] = useState("");
   const [erro, setErro] = useState("");
   const [etapa, setEtapa] = useState(1);
+  const [carregando, setCarregando] = useState(false); // Adicionado indicador de carregamento
 
   const total = cart.reduce(
     (acc, item) => acc + item.preco * item.quantidade,
     0
   );
+
+  // Máscara para número de cartão
+  const handleNumeroCartaoChange = (e) => {
+    const valor = e.target.value.replace(/\D/g, "");
+    setNumeroCartao(valor.slice(0, 16)); // Limita a 16 dígitos
+  };
+
+  // Máscara para data de validade
+  const handleDataValidadeChange = (e) => {
+    const valor = e.target.value.replace(/\D/g, "");
+    if (valor.length <= 2) {
+      setDataValidade(valor);
+    } else {
+      setDataValidade(valor.slice(0, 2) + "/" + valor.slice(2, 4)); // MM/AA
+    }
+  };
+
+  // Máscara para código de segurança
+  const handleCodigoSegurancaChange = (e) => {
+    const valor = e.target.value.replace(/\D/g, "");
+    setCodigoSeguranca(valor.slice(0, 3)); // Limita a 3 dígitos
+  };
 
   const validarDadosPagamento = () => {
     if (!nomeNoCartao || !numeroCartao || !dataValidade || !codigoSeguranca) {
@@ -25,6 +48,10 @@ function Checkout() {
     }
     if (numeroCartao.length !== 16) {
       setErro("Número do cartão inválido.");
+      return false;
+    }
+    if (!/^\d{2}\/\d{2}$/.test(dataValidade)) {
+      setErro("Data de validade inválida.");
       return false;
     }
     if (codigoSeguranca.length !== 3) {
@@ -37,25 +64,54 @@ function Checkout() {
 
   const finalizarCompra = () => {
     if (!validarDadosPagamento()) return;
+    setCarregando(true); // Inicia o carregamento
 
-    setEtapa(3);
+    setTimeout(() => {
+      setCarregando(false); // Remove carregamento após a simulação
+      setEtapa(3);
 
-    const comprasAnteriores =
-      JSON.parse(localStorage.getItem("historicoDeCompras")) || [];
-    comprasAnteriores.push({ id: Date.now(), itens: cart, total: total });
-    localStorage.setItem(
-      "historicoDeCompras",
-      JSON.stringify(comprasAnteriores)
-    );
+      const comprasAnteriores =
+        JSON.parse(localStorage.getItem("historicoDeCompras")) || [];
+      comprasAnteriores.push({ id: Date.now(), itens: cart, total: total });
+      localStorage.setItem(
+        "historicoDeCompras",
+        JSON.stringify(comprasAnteriores)
+      );
 
-    dispatch({ type: "CLEAR_CART" });
-    localStorage.removeItem("cart");
+      dispatch({ type: "CLEAR_CART" });
+      localStorage.removeItem("cart");
 
-    navigate("/finalizacao");
+      navigate("/finalizacao");
+    }, 2000); // Simula um atraso de 2 segundos para processamento
   };
 
   return (
     <div className={styles.checkoutContainer}>
+      {/* Indicador de Progresso */}
+      <div className={styles.progressBar}>
+        <div
+          className={`${styles.progressStep} ${
+            etapa >= 1 ? styles.activeStep : ""
+          }`}
+        >
+          Resumo
+        </div>
+        <div
+          className={`${styles.progressStep} ${
+            etapa >= 2 ? styles.activeStep : ""
+          }`}
+        >
+          Pagamento
+        </div>
+        <div
+          className={`${styles.progressStep} ${
+            etapa === 3 ? styles.activeStep : ""
+          }`}
+        >
+          Finalização
+        </div>
+      </div>
+
       {etapa === 1 && (
         <div className={styles.checkoutResumo}>
           <h1 className={styles.checkoutTitulo}>Resumo da Compra</h1>
@@ -124,19 +180,19 @@ function Checkout() {
                 type="text"
                 className={styles.checkoutFormInput}
                 value={numeroCartao}
-                onChange={(e) => setNumeroCartao(e.target.value)}
+                onChange={handleNumeroCartaoChange}
                 required
               />
             </div>
             <div className={styles.checkoutFormCampo}>
               <label className={styles.checkoutFormLabel}>
-                Data de Validade
+                Data de Validade (MM/AA)
               </label>
               <input
                 type="text"
                 className={styles.checkoutFormInput}
                 value={dataValidade}
-                onChange={(e) => setDataValidade(e.target.value)}
+                onChange={handleDataValidadeChange}
                 required
               />
             </div>
@@ -148,13 +204,17 @@ function Checkout() {
                 type="text"
                 className={styles.checkoutFormInput}
                 value={codigoSeguranca}
-                onChange={(e) => setCodigoSeguranca(e.target.value)}
+                onChange={handleCodigoSegurancaChange}
                 required
               />
             </div>
             {erro && <p className={styles.checkoutErro}>{erro}</p>}
-            <button type="submit" className={styles.checkoutBotaoFinalizar}>
-              Finalizar Compra
+            <button
+              type="submit"
+              className={styles.checkoutBotaoFinalizar}
+              disabled={carregando} // Desativa enquanto carrega
+            >
+              {carregando ? "Processando..." : "Finalizar Compra"}
             </button>
           </form>
         </div>
