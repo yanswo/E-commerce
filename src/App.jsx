@@ -9,19 +9,20 @@ import Finalizacao from "./pages/Finalizacao";
 import Login from "./acess/Login";
 import Cadastro from "./acess/Cadastro";
 import ProtectedRoute from "./route/ProtectedRoute";
+import Produtos from "./pages/Produtos";
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
+    <CartProvider>
+      <AuthProvider>
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Cadastro />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/produtos" element={<Produtos />} />
 
-            {/* Rotas protegidas */}
             <Route
               path="/checkout"
               element={
@@ -42,8 +43,8 @@ function App() {
             <Route path="/finalizacao" element={<Finalizacao />} />
           </Routes>
         </Router>
-      </CartProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </CartProvider>
   );
 }
 

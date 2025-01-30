@@ -2,11 +2,11 @@ import styles from "./Checkout.module.css";
 import CartContext from "../context/CartContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Importe o AuthContext
+import { useAuth } from "../context/AuthContext";
 
 function Checkout() {
   const { cart, dispatch } = useContext(CartContext);
-  const { user } = useAuth(); // Acesse o usuário logado
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [nomeNoCartao, setNomeNoCartao] = useState("");
   const [numeroCartao, setNumeroCartao] = useState("");
@@ -21,13 +21,11 @@ function Checkout() {
     0
   );
 
-  // Máscara para número de cartão
   const handleNumeroCartaoChange = (e) => {
     const valor = e.target.value.replace(/\D/g, "");
     setNumeroCartao(valor.slice(0, 16));
   };
 
-  // Máscara para data de validade
   const handleDataValidadeChange = (e) => {
     const valor = e.target.value.replace(/\D/g, "");
     if (valor.length <= 2) {
@@ -37,7 +35,6 @@ function Checkout() {
     }
   };
 
-  // Máscara para código de segurança
   const handleCodigoSegurancaChange = (e) => {
     const valor = e.target.value.replace(/\D/g, "");
     setCodigoSeguranca(valor.slice(0, 3));
@@ -109,7 +106,6 @@ function Checkout() {
 
   return (
     <div className={styles.checkoutContainer}>
-      {/* Indicador de Progresso */}
       <div className={styles.progressBar}>
         <div
           className={`${styles.progressStep} ${
@@ -234,7 +230,7 @@ function Checkout() {
             <button
               type="submit"
               className={styles.checkoutBotaoFinalizar}
-              disabled={carregando} // Desativa enquanto carrega
+              disabled={carregando}
             >
               {carregando ? "Processando..." : "Finalizar Compra"}
             </button>

@@ -1,3 +1,12 @@
+:root {
+  --primary-color: #3e7e52;
+  --primary-hover: #2f5a3d;
+  --secondary-color: #5c9e8a;
+  --bg-light: #f9f9f9;
+  --bg-dark: #2a3d66;
+  --text-light: #ffffff;
+  --text-dark: #212121;
+}
 *,
 *::before,
 *::after {

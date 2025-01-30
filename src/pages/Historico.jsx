@@ -7,24 +7,20 @@ function Historico() {
   const [historico, setHistorico] = useState([]);
   const [carregando, setCarregando] = useState(true);
 
-  // Busca o histórico do usuário
   useEffect(() => {
     const buscarHistorico = async () => {
       if (user) {
         try {
-          // Busca o histórico
           const responseHistorico = await fetch(
             `http://localhost:5000/historico?usuarioId=${user.id}`
           );
           const historicoData = await responseHistorico.json();
 
-          // Busca todos os produtos
           const responseProdutos = await fetch(
             "http://localhost:5000/produtos"
           );
           const produtosData = await responseProdutos.json();
 
-          // Adiciona os nomes dos produtos ao histórico
           const historicoCompleto = historicoData.map((pedido) => ({
             ...pedido,
             produtos: pedido.produtos.map((item) => ({

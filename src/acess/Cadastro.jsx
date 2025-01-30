@@ -21,6 +21,7 @@ function Cadastro() {
           nome,
           email,
           senha,
+          carrinho: [],
         }),
       });
 
@@ -30,7 +31,7 @@ function Cadastro() {
         setError("Erro ao cadastrar usuário");
       }
     } catch (error) {
-      setError("Erro ao conectar ao servidor" + error);
+      setError("Erro ao conectar ao servidor: " + error);
     }
   };
 

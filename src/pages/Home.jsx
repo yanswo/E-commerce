@@ -1,17 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import CartContext from "../context/CartContext";
 import styles from "./Home.module.css";
-import CartDropdown from "../components/CartDropdown";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Header from "../components/Header";
 
 function Home() {
   const { dispatch } = useContext(CartContext);
   const [produtos, setProdutos] = useState([]);
-
+  const [searchQuery, setSearchQuery] = useState("");
   const { user, logout } = useAuth();
-  const [mostrarMenu, setMostrarMenu] = useState(false);
   const navigate = useNavigate();
+
+  const handleSearch = () => {
+    navigate(`/produtos?search=${searchQuery}`);
+  };
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -40,58 +43,13 @@ function Home() {
 
   return (
     <div className={styles.homeContainer}>
-      <header className={styles.header}>
-        <div className={styles.logo}>E-Store</div>
-        <nav className={styles.nav}>
-          <ul>
-            <li>Home</li>
-            <li>Produtos</li>
-            <li>Promoções</li>
-            <li>Contato</li>
-          </ul>
-        </nav>
-
-        <div className={styles.authSection}>
-          {user ? (
-            <div className={styles.userMenu}>
-              <button
-                className={styles.minhaContaButton}
-                onClick={() => setMostrarMenu(!mostrarMenu)}
-              >
-                👤 Minha Conta <span className={styles.seta}>▼</span>
-              </button>
-              {mostrarMenu && (
-                <div className={styles.menuDropdown}>
-                  <button onClick={() => navigate("/historico")}>
-                    Histórico
-                  </button>
-                  <button onClick={() => navigate("/configuracoes")}>
-                    Configurações
-                  </button>
-                  <button onClick={logout}>Sair</button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <button
-              className={styles.loginButton}
-              onClick={() => navigate("/login")}
-            >
-              Entrar/Cadastrar
-            </button>
-          )}
-        </div>
-
-        <div className={styles.searchCart}>
-          <div className={styles.searchBar}>
-            <input type="text" placeholder="Buscar produtos" />
-            <button className={styles.searchButton}>🔍</button>
-          </div>
-          <div className={styles.cartIcon}>
-            <CartDropdown>🛒</CartDropdown>
-          </div>
-        </div>
-      </header>
+      <Header
+        user={user}
+        logout={logout}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        handleSearch={handleSearch}
+      />
 
       <div className={styles.banner}>
         <div className={styles.bannerContent}>
@@ -101,19 +59,10 @@ function Home() {
         </div>
       </div>
 
-      <div className={styles.categorias}>
-        <h2>Categorias</h2>
-        <div className={styles.categoriasLista}>
-          <div className={styles.categoriaItem}>Roupas</div>
-          <div className={styles.categoriaItem}>Acessórios</div>
-          <div className={styles.categoriaItem}>Calçados</div>
-        </div>
-      </div>
-
       <div className={styles.produtosEmDestaque}>
-        <h2>Produtos em Destaque</h2>
-        <div className={styles.produtos}>
-          {produtos.map((produto) => (
+        <h2 className={styles.sectionTitle}>Produtos em Destaque</h2>
+        <div className={styles.produtosGrid}>
+          {produtos.slice(0, 6).map((produto) => (
             <div key={produto.id} className={styles.produto}>
               <img
                 className={styles.imagemProduto}
@@ -142,29 +91,28 @@ function Home() {
         </div>
       </div>
 
-      <div className={styles.blog}>
-        <h2>Artigos e Dicas</h2>
-        <div className={styles.artigo}>
-          <h3>Como escolher o melhor produto para você</h3>
-          <p>Leia mais sobre como fazer compras inteligentes em nosso blog!</p>
-        </div>
-        <div className={styles.artigo}>
-          <h3>Guia de Tamanhos: Encontre o tamanho perfeito</h3>
-          <p>
-            Veja nosso guia completo de tamanhos para não errar na escolha do
-            seu produto.
-          </p>
-        </div>
-      </div>
-
-      <div className={styles.newsletter}>
-        <h2>Inscreva-se para receber novidades!</h2>
-        <input type="email" placeholder="Digite seu e-mail" />
-        <button>Inscrever</button>
-      </div>
-
       <footer className={styles.footer}>
-        <p>&copy; 2025 E-Store. Todos os direitos reservados.</p>
+        <div className={styles.footerContent}>
+          <div className={styles.footerSection}>
+            <h4>Sobre Nós</h4>
+            <ul>
+              <li>Nossa História</li>
+              <li>Lojas Físicas</li>
+              <li>Trabalhe Conosco</li>
+            </ul>
+          </div>
+          <div className={styles.footerSection}>
+            <h4>Ajuda</h4>
+            <ul>
+              <li>FAQ</li>
+              <li>Trocas e Devoluções</li>
+              <li>Formas de Pagamento</li>
+            </ul>
+          </div>
+        </div>
+        <div className={styles.footerBottom}>
+          <p>&copy; 2025 E-Store. Todos os direitos reservados.</p>
+        </div>
       </footer>
     </div>
   );

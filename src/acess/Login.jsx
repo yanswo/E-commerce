@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
+import { useCart } from "../context/CartContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
+  const { dispatch } = useCart();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,12 +22,17 @@ function Login() {
 
       if (user) {
         login(user);
+        localStorage.setItem("userId", user.id);
+
+        const userCart = user.carrinho || [];
+
+        dispatch({ type: "SET_CART", payload: userCart });
         navigate("/");
       } else {
         setError("Credenciais inválidas");
       }
     } catch (error) {
-      setError("Erro ao fazer login" + error);
+      setError("Erro ao fazer login: " + error);
     }
   };
 

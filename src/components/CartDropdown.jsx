@@ -29,7 +29,6 @@ function CartDropdown() {
     }
   };
 
-  // Calcular o total do carrinho
   const totalCarrinho = cart.reduce(
     (total, produto) => total + produto.preco * produto.quantidade,
     0
@@ -38,7 +37,10 @@ function CartDropdown() {
   return (
     <div className={styles.cartDropdownContainer}>
       <div className={styles.cartIcon} onClick={toggleDropdown}>
-        🛒
+        🛒{" "}
+        {cart.length > 0 && (
+          <span className={styles.cartBadge}>{cart.length}</span>
+        )}
       </div>
 
       {isOpen && (

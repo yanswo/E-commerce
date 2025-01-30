@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { createContext, useReducer, useEffect } from "react";
+
+import { createContext, useReducer, useEffect, useContext } from "react";
 
 const CartContext = createContext();
 
@@ -57,7 +58,8 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, [], () => {
-    const savedCart = localStorage.getItem("cart");
+    const userId = localStorage.getItem("userId");
+    const savedCart = localStorage.getItem(`cart-${userId}`);
     let parsedCart = [];
     try {
       parsedCart = savedCart ? JSON.parse(savedCart) : [];
@@ -68,14 +70,32 @@ export const CartProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      localStorage.setItem(`cart-${userId}`, JSON.stringify(cart));
+    }
   }, [cart]);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      localStorage.removeItem("cart");
+    }
+  }, []);
 
   return (
     <CartContext.Provider value={{ cart, dispatch }}>
       {children}
     </CartContext.Provider>
   );
+};
+
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 };
 
 export default CartContext;
