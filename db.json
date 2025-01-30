@@ -1,7 +1,7 @@
 {
   "produtos": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Camisa",
       "descricao": "Descrição do Produto A",
       "preco": 99.99,
@@ -10,7 +10,7 @@
       "categoria": "Roupas"
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Moletom",
       "descricao": "Descrição do Produto B",
       "preco": 149.99,
@@ -19,18 +19,45 @@
       "categoria": "Roupas"
     },
     {
-      "id": 3,
+      "id": "3",
       "nome": "Tênis",
       "descricao": "Descrição do Produto C",
       "preco": 199.99,
       "imagem": "https://placehold.co/600x400",
       "disponibilidade": true,
       "categoria": "Calçados"
+    },
+    {
+      "id": "4",
+      "nome": "Boné",
+      "descricao": "Descrição do Produto C",
+      "preco": 20.99,
+      "imagem": "https://placehold.co/600x400",
+      "disponibilidade": true,
+      "categoria": "Roupas"
+    },
+    {
+      "id": "5",
+      "nome": "Jaqueta",
+      "descricao": "Descrição do Produto C",
+      "preco": 299.99,
+      "imagem": "https://placehold.co/600x400",
+      "disponibilidade": true,
+      "categoria": "Roupas"
+    },
+    {
+      "id": "6",
+      "nome": "Óculos Escuro",
+      "descricao": "Descrição do Produto C",
+      "preco": 49.99,
+      "imagem": "https://placehold.co/600x400",
+      "disponibilidade": true,
+      "categoria": "Acessório"
     }
   ],
   "usuarios": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Gestor",
       "email": "admin@super.com",
       "senha": "superadmin"
@@ -44,22 +71,35 @@
   ],
   "historico": [
     {
-      "id": 1,
+      "id": "4640",
       "usuarioId": "a4ba",
-      "data": "2023-10-25T12:00:00Z",
+      "data": "2025-01-29T21:14:30.352Z",
       "produtos": [
         {
-          "produtoId": 1,
-          "quantidade": 2,
-          "precoUnitario": 99.99
-        },
-        {
-          "produtoId": 3,
+          "produtoId": "3",
           "quantidade": 1,
           "precoUnitario": 199.99
         }
       ],
-      "total": 399.97
+      "total": 199.99
+    },
+    {
+      "id": "21e6",
+      "usuarioId": "a4ba",
+      "data": "2025-01-30T07:03:16.018Z",
+      "produtos": [
+        {
+          "produtoId": "2",
+          "quantidade": 1,
+          "precoUnitario": 149.99
+        },
+        {
+          "produtoId": "3",
+          "quantidade": 1,
+          "precoUnitario": 199.99
+        }
+      ],
+      "total": 349.98
     }
   ]
 }

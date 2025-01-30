@@ -2,9 +2,11 @@ import styles from "./Checkout.module.css";
 import CartContext from "../context/CartContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Importe o AuthContext
 
 function Checkout() {
   const { cart, dispatch } = useContext(CartContext);
+  const { user } = useAuth(); // Acesse o usuário logado
   const navigate = useNavigate();
   const [nomeNoCartao, setNomeNoCartao] = useState("");
   const [numeroCartao, setNumeroCartao] = useState("");
@@ -12,7 +14,7 @@ function Checkout() {
   const [codigoSeguranca, setCodigoSeguranca] = useState("");
   const [erro, setErro] = useState("");
   const [etapa, setEtapa] = useState(1);
-  const [carregando, setCarregando] = useState(false); // Adicionado indicador de carregamento
+  const [carregando, setCarregando] = useState(false);
 
   const total = cart.reduce(
     (acc, item) => acc + item.preco * item.quantidade,
@@ -22,7 +24,7 @@ function Checkout() {
   // Máscara para número de cartão
   const handleNumeroCartaoChange = (e) => {
     const valor = e.target.value.replace(/\D/g, "");
-    setNumeroCartao(valor.slice(0, 16)); // Limita a 16 dígitos
+    setNumeroCartao(valor.slice(0, 16));
   };
 
   // Máscara para data de validade
@@ -31,14 +33,14 @@ function Checkout() {
     if (valor.length <= 2) {
       setDataValidade(valor);
     } else {
-      setDataValidade(valor.slice(0, 2) + "/" + valor.slice(2, 4)); // MM/AA
+      setDataValidade(valor.slice(0, 2) + "/" + valor.slice(2, 4));
     }
   };
 
   // Máscara para código de segurança
   const handleCodigoSegurancaChange = (e) => {
     const valor = e.target.value.replace(/\D/g, "");
-    setCodigoSeguranca(valor.slice(0, 3)); // Limita a 3 dígitos
+    setCodigoSeguranca(valor.slice(0, 3));
   };
 
   const validarDadosPagamento = () => {
@@ -62,27 +64,47 @@ function Checkout() {
     return true;
   };
 
-  const finalizarCompra = () => {
+  const salvarHistorico = async (compra) => {
+    try {
+      const response = await fetch("http://localhost:5000/historico", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(compra),
+      });
+      if (!response.ok) {
+        throw new Error("Erro ao salvar histórico");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Erro ao salvar histórico:", error);
+      throw error;
+    }
+  };
+
+  const finalizarCompra = async () => {
     if (!validarDadosPagamento()) return;
-    setCarregando(true); // Inicia o carregamento
+    setCarregando(true);
 
-    setTimeout(() => {
-      setCarregando(false); // Remove carregamento após a simulação
-      setEtapa(3);
+    try {
+      const compra = {
+        usuarioId: user.id,
+        data: new Date().toISOString(),
+        produtos: cart.map((item) => ({
+          produtoId: item.id,
+          quantidade: item.quantidade,
+          precoUnitario: item.preco,
+        })),
+        total: total,
+      };
 
-      const comprasAnteriores =
-        JSON.parse(localStorage.getItem("historicoDeCompras")) || [];
-      comprasAnteriores.push({ id: Date.now(), itens: cart, total: total });
-      localStorage.setItem(
-        "historicoDeCompras",
-        JSON.stringify(comprasAnteriores)
-      );
-
+      await salvarHistorico(compra);
       dispatch({ type: "CLEAR_CART" });
-      localStorage.removeItem("cart");
-
       navigate("/finalizacao");
-    }, 2000); // Simula um atraso de 2 segundos para processamento
+    } catch (error) {
+      setErro("Erro ao finalizar a compra. Tente novamente." + error);
+    } finally {
+      setCarregando(false);
+    }
   };
 
   return (

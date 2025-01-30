@@ -1,28 +1,81 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import styles from "./Historico.module.css";
 
 function Historico() {
-  const navigate = useNavigate();
-  const historicoDeCompras =
-    JSON.parse(localStorage.getItem("historicoDeCompras")) || [];
+  const { user } = useAuth();
+  const [historico, setHistorico] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  // Busca o histórico do usuário
+  useEffect(() => {
+    const buscarHistorico = async () => {
+      if (user) {
+        try {
+          // Busca o histórico
+          const responseHistorico = await fetch(
+            `http://localhost:5000/historico?usuarioId=${user.id}`
+          );
+          const historicoData = await responseHistorico.json();
+
+          // Busca todos os produtos
+          const responseProdutos = await fetch(
+            "http://localhost:5000/produtos"
+          );
+          const produtosData = await responseProdutos.json();
+
+          // Adiciona os nomes dos produtos ao histórico
+          const historicoCompleto = historicoData.map((pedido) => ({
+            ...pedido,
+            produtos: pedido.produtos.map((item) => ({
+              ...item,
+              nome:
+                produtosData.find((produto) => produto.id === item.produtoId)
+                  ?.nome || "Produto não encontrado",
+            })),
+          }));
+
+          setHistorico(historicoCompleto);
+        } catch (error) {
+          console.error("Erro ao buscar histórico:", error);
+        } finally {
+          setCarregando(false);
+        }
+      }
+    };
+
+    buscarHistorico();
+  }, [user]);
+
+  if (carregando) {
+    return <div className={styles.carregando}>Carregando histórico...</div>;
+  }
+
+  if (historico.length === 0) {
+    return <div className={styles.semHistorico}>Nenhum pedido encontrado.</div>;
+  }
 
   return (
-    <div>
-      <h1>Histórico de Compras</h1>
-      {historicoDeCompras.length === 0 ? (
-        <p>Você ainda não fez nenhuma compra.</p>
-      ) : (
-        <div>
-          {historicoDeCompras.map((compra) => (
-            <div key={compra.id}>
-              <h3>Pedido {compra.id}</h3>
-              <p>Total: R$ {compra.total}</p>
-              <button onClick={() => navigate(`/checkout`)}>
-                Ver Detalhes
-              </button>
-            </div>
-          ))}
+    <div className={styles.historicoContainer}>
+      <h2>Meu Histórico de Compras</h2>
+      {historico.map((pedido) => (
+        <div key={pedido.id} className={styles.pedido}>
+          <div className={styles.pedidoCabecalho}>
+            <span>Pedido #{pedido.id}</span>
+            <span>{new Date(pedido.data).toLocaleDateString()}</span>
+            <span>Total: R$ {pedido.total.toFixed(2)}</span>
+          </div>
+          <div className={styles.produtos}>
+            {pedido.produtos.map((item) => (
+              <div key={item.produtoId} className={styles.produto}>
+                <span>{item.quantidade}x</span>
+                <span>{item.nome || "Produto não encontrado"}</span>
+                <span>R$ {item.precoUnitario.toFixed(2)}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+      ))}
     </div>
   );
 }

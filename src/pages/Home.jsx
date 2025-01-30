@@ -8,7 +8,9 @@ import { useAuth } from "../context/AuthContext";
 function Home() {
   const { dispatch } = useContext(CartContext);
   const [produtos, setProdutos] = useState([]);
+
   const { user, logout } = useAuth();
+  const [mostrarMenu, setMostrarMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,15 +51,26 @@ function Home() {
           </ul>
         </nav>
 
-        {/* Seção de Autenticação */}
         <div className={styles.authSection}>
           {user ? (
-            <div className={styles.userInfo}>
-              <span>Olá, {user.nome}</span>
-              <button onClick={() => navigate("/historico")}>
-                Minha Conta
+            <div className={styles.userMenu}>
+              <button
+                className={styles.minhaContaButton}
+                onClick={() => setMostrarMenu(!mostrarMenu)}
+              >
+                👤 Minha Conta <span className={styles.seta}>▼</span>
               </button>
-              <button onClick={logout}>Sair</button>
+              {mostrarMenu && (
+                <div className={styles.menuDropdown}>
+                  <button onClick={() => navigate("/historico")}>
+                    Histórico
+                  </button>
+                  <button onClick={() => navigate("/configuracoes")}>
+                    Configurações
+                  </button>
+                  <button onClick={logout}>Sair</button>
+                </div>
+              )}
             </div>
           ) : (
             <button
@@ -70,7 +83,10 @@ function Home() {
         </div>
 
         <div className={styles.searchCart}>
-          <input type="text" placeholder="Buscar produtos" />
+          <div className={styles.searchBar}>
+            <input type="text" placeholder="Buscar produtos" />
+            <button className={styles.searchButton}>🔍</button>
+          </div>
           <div className={styles.cartIcon}>
             <CartDropdown>🛒</CartDropdown>
           </div>
@@ -78,16 +94,20 @@ function Home() {
       </header>
 
       <div className={styles.banner}>
-        <h1>Ofertas Imperdíveis!</h1>
-        <p>Até 50% de desconto em todos os produtos</p>
-        <button>Confira Agora</button>
+        <div className={styles.bannerContent}>
+          <h1>Ofertas Imperdíveis!</h1>
+          <p>Até 50% de desconto em todos os produtos</p>
+          <button>Confira Agora</button>
+        </div>
       </div>
 
       <div className={styles.categorias}>
         <h2>Categorias</h2>
-        <div className={styles.categoriaItem}>Roupas</div>
-        <div className={styles.categoriaItem}>Acessórios</div>
-        <div className={styles.categoriaItem}>Calçados</div>
+        <div className={styles.categoriasLista}>
+          <div className={styles.categoriaItem}>Roupas</div>
+          <div className={styles.categoriaItem}>Acessórios</div>
+          <div className={styles.categoriaItem}>Calçados</div>
+        </div>
       </div>
 
       <div className={styles.produtosEmDestaque}>
@@ -101,71 +121,24 @@ function Home() {
                 alt={produto.nome}
               />
               <h3>{produto.nome}</h3>
-              <p>R$ {produto.preco}</p>
-              <p>{produto.disponibilidade ? "Disponível" : "Indisponível"}</p>
-              <button onClick={() => adicionarAoCarrinho(produto)}>
+              <p className={styles.preco}>R$ {produto.preco}</p>
+              <p className={styles.disponibilidade}>
+                {produto.disponibilidade ? "Disponível" : "Indisponível"}
+              </p>
+              <button
+                onClick={() => adicionarAoCarrinho(produto)}
+                className={
+                  produto.disponibilidade
+                    ? styles.botaoDisponivel
+                    : styles.botaoIndisponivel
+                }
+              >
                 {produto.disponibilidade
                   ? "Adicionar ao Carrinho"
                   : "Produto Indisponível"}
               </button>
             </div>
           ))}
-        </div>
-      </div>
-
-      <div className={styles.produtosEmOferta}>
-        <h2>Produtos em Oferta</h2>
-        <div className={styles.produtos}>
-          <div className={styles.produto}>
-            <img
-              className={styles.imagemProduto}
-              src="https://placehold.co/600x400"
-              alt="Oferta 1"
-            />
-            <h3>Produto em Oferta 1</h3>
-            <p>R$ 80</p>
-            <p>Estoque: 5</p>
-            <button>Adicionar ao Carrinho</button>
-          </div>
-          <div className={styles.produto}>
-            <img
-              className={styles.imagemProduto}
-              src="https://placehold.co/600x400"
-              alt="Oferta 2"
-            />
-            <h3>Produto em Oferta 2</h3>
-            <p>R$ 150</p>
-            <p>Estoque: 8</p>
-            <button>Adicionar ao Carrinho</button>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.novidades}>
-        <h2>Novidades</h2>
-        <div className={styles.produtos}>
-          <div className={styles.produto}>
-            <img
-              className={styles.imagemProduto}
-              src="https://placehold.co/600x400"
-              alt="Novo 1"
-            />
-            <h3>Produto Novo 1</h3>
-            <p>R$ 120</p>
-            <p>Estoque: 10</p>
-            <button>Adicionar ao Carrinho</button>
-          </div>
-          <div className={styles.produto}>
-            <img
-              className={styles.imagemProduto}
-              src="https://placehold.co/600x400"
-              alt="Novo 2"
-            />
-            <h3>Produto Novo 2</h3>
-            <p>R$ 180</p>
-            <p>Estoque: 3</p>
-            <button>Adicionar ao Carrinho</button>
-          </div>
         </div>
       </div>
 

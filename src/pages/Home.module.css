@@ -1,3 +1,7 @@
+.homeContainer {
+  padding-top: 80px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -5,6 +9,16 @@
   padding: 20px 40px;
   background-color: #333;
   color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.loginButton {
+  background-color: #427a57;
 }
 
 .logo {
@@ -19,14 +33,14 @@
 }
 
 .nav li {
-  list-style-type: none;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: color 0.3s;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .nav li:hover {
-  color: #ff6347;
+  background-color: #ff6347;
+  color: white;
 }
 
 .searchCart {
@@ -48,37 +62,49 @@
 }
 
 .banner {
-  background-color: #f8f8f8;
-  color: #333;
+  background: linear-gradient(to bottom right, #292929, #848483);
+  color: white;
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
   border-bottom: 2px solid #ddd;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.bannerContent {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .banner h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.banner p {
-  font-size: 1.2rem;
+  font-size: 3rem;
+  font-weight: 700;
   margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+.banner p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 .banner button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #ff6347;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  background-color: #000000;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: transform 0.3s, background-color 0.3s ease-in-out;
 }
 
 .banner button:hover {
-  background-color: #e5533d;
+  background-color: #e5a800;
+  transform: translateY(-5px);
+}
+
+.banner button:active {
+  transform: translateY(0);
 }
 
 .categorias {
@@ -89,26 +115,42 @@
 }
 
 .categorias h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.categoriasLista {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .categoriaItem {
   display: inline-block;
-  background-color: #ff6347;
+  background-color: #383838;
   color: white;
-  padding: 12px 25px;
-  margin: 0 10px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: 500;
   border-radius: 30px;
-  font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .categoriaItem:hover {
-  background-color: #e5533d;
-  transform: scale(1.05);
+  background-color: #898888;
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.categoriaItem:active {
+  transform: scale(1);
 }
 
 .produtosEmDestaque {
@@ -124,28 +166,18 @@
   margin-bottom: 30px;
 }
 
-.produtosEmOferta {
-  padding: 60px 20px;
-  text-align: center;
-  background-color: #f4f4f4;
-}
-
-.produtosEmOferta h2 {
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 30px;
-}
-
 .produtos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
-  text-align: center;
   justify-items: center;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   margin-top: 30px;
   padding: 0 10px;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .produto {
@@ -167,10 +199,15 @@
 
 .imagemProduto {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   margin-bottom: 15px;
   border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.produto:hover .imagemProduto {
+  transform: scale(1.05);
 }
 
 .produto h3 {
@@ -179,22 +216,45 @@
   margin: 10px 0;
 }
 
-.produto p {
+.preco {
+  font-size: 1.2rem;
+  color: #ff6347;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.disponibilidade {
   font-size: 1.1rem;
   color: #666;
+  margin-bottom: 20px;
 }
 
 button {
-  padding: 12px 20px;
-  background-color: #ff6347;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #2f2f2f;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
+  background-color: #e5533d;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.botaoIndisponivel {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.botaoDisponivel:hover {
   background-color: #e5533d;
 }
 
@@ -311,4 +371,134 @@ button:hover {
   margin: 0;
   font-size: 1rem;
   color: #bbb;
+}
+
+.authSection {
+  position: relative;
+}
+
+.userMenu {
+  position: relative;
+}
+
+.minhaContaButton {
+  background-color: #427a57;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.minhaContaButton:hover {
+  background-color: #32553f;
+}
+
+.menuDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgb(206, 205, 205);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 10px;
+  min-width: 150px;
+}
+
+.menuDropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menuDropdown button:hover {
+  background-color: #f5f5f5;
+}
+.seta {
+  font-size: 0.8rem;
+  transition: transform 0.3s;
+}
+
+.minhaContaButton:hover .seta {
+  transform: translateY(2px);
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.searchBar input {
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.searchButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menuDropdown {
+  animation: slideDown 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+  .categorias h2 {
+    font-size: 2rem;
+  }
+
+  .categoriasLista {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .categoriaItem {
+    margin-bottom: 15px;
+  }
+}
+@media (max-width: 768px) {
+  .produtosEmDestaque h2 {
+    font-size: 2rem;
+  }
+
+  .produtos {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .produto {
+    max-width: 100%;
+  }
+
+  .imagemProduto {
+    height: 200px;
+  }
 }
