@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import CartContext from "../context/CartContext";
+import WishlistContext from "../context/WishlistContext"; // Adicione o WishlistContext
 import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
 
 function Home() {
-  const { dispatch } = useContext(CartContext);
+  const { dispatch: dispatchCart } = useContext(CartContext);
+  const { wishlist, dispatch: dispatchWishlist } = useContext(WishlistContext); // Use WishlistContext
   const [produtos, setProdutos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const { user, logout } = useAuth();
@@ -35,9 +37,19 @@ function Home() {
 
   const adicionarAoCarrinho = (produto) => {
     if (produto.disponibilidade) {
-      dispatch({ type: "ADD_TO_CART", payload: produto });
+      dispatchCart({ type: "ADD_TO_CART", payload: produto });
     } else {
       alert("Produto fora de estoque");
+    }
+  };
+
+  // Função para adicionar ou remover da wishlist
+  const toggleWishlist = (produto) => {
+    const isInWishlist = wishlist.find((item) => item.id === produto.id);
+    if (isInWishlist) {
+      dispatchWishlist({ type: "REMOVE_FROM_WISHLIST", payload: produto });
+    } else {
+      dispatchWishlist({ type: "ADD_TO_WISHLIST", payload: produto });
     }
   };
 
@@ -85,6 +97,13 @@ function Home() {
                 {produto.disponibilidade
                   ? "Adicionar ao Carrinho"
                   : "Produto Indisponível"}
+              </button>
+              {/* Botão de Wishlist */}
+              <button
+                onClick={() => toggleWishlist(produto)}
+                className={styles.wishlistButton}
+              >
+                {wishlist.find((item) => item.id === produto.id) ? "❤️" : "🤍"}
               </button>
             </div>
           ))}

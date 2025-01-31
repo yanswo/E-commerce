@@ -22,6 +22,7 @@ function Cadastro() {
           email,
           senha,
           carrinho: [],
+          wishlist: [],
         }),
       });
 

@@ -1,24 +1,27 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import CartDropdown from "../components/CartDropdown";
+import WishlistDropdown from "../components/WishlistDropdown";
 import styles from "./Header.module.css";
 import CartContext from "../context/CartContext";
-import { useContext } from "react";
+import { useWishlist } from "../context/WishlistContext";
+import { FaHeart } from "react-icons/fa";
 
 function Header({ user, logout, searchQuery, setSearchQuery, handleSearch }) {
   const [mostrarMenu, setMostrarMenu] = useState(false);
+  const [wishlistOpen, setWishlistOpen] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useContext(CartContext);
+  const { wishlist } = useWishlist();
 
   const handleLogout = () => {
     const userId = localStorage.getItem("userId");
     if (userId) {
       localStorage.removeItem(`cart-${userId}`);
     }
-
     logout();
   };
 
@@ -82,8 +85,25 @@ function Header({ user, logout, searchQuery, setSearchQuery, handleSearch }) {
             🔍
           </button>
         </div>
-        <div className={styles.cartIcon}>
-          <CartDropdown />
+
+        <div className={styles.icons}>
+          <div className={styles.wishdropdown}>
+            <button
+              className={styles.wishlistButton}
+              onClick={() => setWishlistOpen(!wishlistOpen)}
+            >
+              <FaHeart
+                className={`${styles.heartIcon} ${
+                  wishlist.length > 0 ? styles.activeHeart : ""
+                }`}
+              />
+            </button>
+            {wishlistOpen && <WishlistDropdown />}
+          </div>
+
+          <div className={styles.cartIcon}>
+            <CartDropdown />
+          </div>
         </div>
       </div>
     </header>
