@@ -4,18 +4,22 @@ import ProductCard from "../components/ProductCard";
 import Header from "../components/Header";
 import styles from "./Produtos.module.css";
 import { useAuth } from "../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
-function Produtos({ searchQuery, setSearchQuery, handleSearch }) {
+function Produtos({ handleSearch }) {
   const [produtos, setProdutos] = useState([]);
   const [filteredProdutos, setFilteredProdutos] = useState([]);
-  const [categories, setCategories] = useState([]); // Para armazenar as categorias
-  const [selectedCategory, setSelectedCategory] = useState(""); // Categoria selecionada
-  const [selectedRating, setSelectedRating] = useState(""); // Avaliação selecionada
-  const [priceOrder, setPriceOrder] = useState(""); // Ordenação por preço
-  const [availability, setAvailability] = useState(""); // Disponibilidade
-  const [isOnSale, setIsOnSale] = useState(""); // Promoção
-  const [isNew, setIsNew] = useState(""); // Novidade
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedRating, setSelectedRating] = useState("");
+  const [priceOrder, setPriceOrder] = useState("");
+  const [availability, setAvailability] = useState("");
+  const [isOnSale, setIsOnSale] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isNew, setIsNew] = useState("");
   const { user, logout } = useAuth();
+  const location = useLocation();
+
   useEffect(() => {
     const fetchProdutos = async () => {
       const response = await fetch("http://localhost:5000/produtos");
@@ -23,41 +27,66 @@ function Produtos({ searchQuery, setSearchQuery, handleSearch }) {
       setProdutos(data);
       setFilteredProdutos(data);
 
-      // Para preencher as categorias (supondo que os produtos tenham a propriedade 'categoria')
       const uniqueCategories = [
         ...new Set(data.map((produto) => produto.categoria)),
       ];
       setCategories(uniqueCategories);
+
+      const query = new URLSearchParams(location.search).get("search");
+      if (query) {
+        filterBySearchQuery(query);
+      }
     };
 
     fetchProdutos();
-  }, []);
+  }, [location.search]);
 
-  // Função para filtrar os produtos por categoria
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get("search");
+    if (query) {
+      setSearchQuery(query);
+      filterBySearchQuery(query);
+    }
+  }, [location.search, produtos]);
+
+  const filterBySearchQuery = (query) => {
+    const filtered = produtos.filter((produto) => {
+      if (produto && produto.nome && typeof produto.nome === "string") {
+        return produto.nome.toLowerCase().includes(query.toLowerCase());
+      }
+      return false;
+    });
+    setFilteredProdutos(filtered);
+  };
+
   const filterByCategory = (category) => {
     setSelectedCategory(category);
-    let filtered = [...produtos];
-    if (category) {
+    if (category === "") {
+      setFilteredProdutos(produtos);
+    } else {
+      let filtered = [...produtos];
       filtered = filtered.filter((produto) => produto.categoria === category);
+      setFilteredProdutos(filtered);
     }
-    setFilteredProdutos(filtered);
   };
 
-  // Função para filtrar por rating
   const filterByRating = (rating) => {
     setSelectedRating(rating);
-    let filtered = [...produtos];
-    if (rating) {
+    if (rating === "") {
+      setFilteredProdutos(produtos);
+    } else {
+      let filtered = [...produtos];
       filtered = filtered.filter((produto) => produto.avaliacao >= rating);
+      setFilteredProdutos(filtered);
     }
-    setFilteredProdutos(filtered);
   };
 
-  // Função para ordenar por preço
   const sortByPrice = (order) => {
     setPriceOrder(order);
     let filtered = [...produtos];
-    if (order === "asc") {
+    if (order === "") {
+      setFilteredProdutos(produtos);
+    } else if (order === "asc") {
       filtered.sort((a, b) => a.preco - b.preco);
     } else if (order === "desc") {
       filtered.sort((a, b) => b.preco - a.preco);
@@ -65,133 +94,164 @@ function Produtos({ searchQuery, setSearchQuery, handleSearch }) {
     setFilteredProdutos(filtered);
   };
 
-  // Função para filtrar por disponibilidade
   const filterByAvailability = (isAvailable) => {
     setAvailability(isAvailable);
-    let filtered = [...produtos];
-    if (isAvailable) {
-      filtered = filtered.filter((produto) => produto.disponibilidade === true);
+    if (isAvailable === "") {
+      setFilteredProdutos(produtos);
+    } else {
+      let filtered = [...produtos];
+      filtered = filtered.filter(
+        (produto) => produto.disponibilidade === isAvailable
+      );
+      setFilteredProdutos(filtered);
     }
-    setFilteredProdutos(filtered);
   };
 
-  // Função para filtrar por "em promoção"
   const filterBySale = (isOnSale) => {
     setIsOnSale(isOnSale);
-    let filtered = [...produtos];
-    if (isOnSale) {
-      filtered = filtered.filter((produto) => produto.emPromocao === true);
+    if (isOnSale === "") {
+      setFilteredProdutos(produtos);
+    } else {
+      let filtered = [...produtos];
+      filtered = filtered.filter((produto) => produto.emPromocao === isOnSale);
+      setFilteredProdutos(filtered);
     }
-    setFilteredProdutos(filtered);
   };
 
-  // Função para filtrar por "novidade"
   const filterByNew = (isNew) => {
     setIsNew(isNew);
-    let filtered = [...produtos];
-    if (isNew) {
-      filtered = filtered.filter((produto) => produto.novidade === true);
+    if (isNew === "") {
+      setFilteredProdutos(produtos);
+    } else {
+      let filtered = [...produtos];
+      filtered = filtered.filter((produto) => produto.novidade === isNew);
+      setFilteredProdutos(filtered);
     }
-    setFilteredProdutos(filtered);
   };
-
   return (
-    <div className={styles.produtoContainer}>
-      <Header
-        user={user}
-        logout={logout}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleSearch={handleSearch}
-      />
+    <div className={styles.Produtos}>
+      <h2>Produtos</h2>
+      <div className={styles.produtoContainer}>
+        <Header
+          user={user}
+          logout={logout}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          handleSearch={handleSearch}
+          produtos={produtos}
+        />
 
-      <div className={styles.filters}>
-        <h3>Filtros</h3>
+        <div className={styles.filters}>
+          <h3>Filtros</h3>
 
-        <div>
-          <label>Categorias</label>
-          <select
-            value={selectedCategory}
-            onChange={(e) => filterByCategory(e.target.value)}
-          >
-            <option value="">Todas</option>
-            {categories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
+          <div>
+            <label>Categorias</label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => filterByCategory(e.target.value)}
+            >
+              <option value="">Todas</option>
+              {categories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label>Avaliação (Estrelas)</label>
+            <select
+              value={selectedRating}
+              onChange={(e) => filterByRating(e.target.value)}
+            >
+              <option value="">Todas</option>
+              {[1, 2, 3, 4, 5].map((rating) => (
+                <option key={rating} value={rating}>
+                  {rating} Estrelas
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label>Ordenar por Preço</label>
+            <select
+              value={priceOrder}
+              onChange={(e) => sortByPrice(e.target.value)}
+            >
+              <option value="">Nenhuma</option>
+              <option value="asc">Menor para Maior</option>
+              <option value="desc">Maior para Menor</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Disponibilidade</label>
+            <select
+              value={availability}
+              onChange={(e) =>
+                filterByAvailability(
+                  e.target.value === "true"
+                    ? true
+                    : e.target.value === "false"
+                    ? false
+                    : ""
+                )
+              }
+            >
+              <option value="">Todas</option>
+              <option value="true">Disponível</option>
+              <option value="false">Indisponível</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Em Promoção</label>
+            <select
+              value={isOnSale}
+              onChange={(e) =>
+                filterBySale(
+                  e.target.value === "true"
+                    ? true
+                    : e.target.value === "false"
+                    ? false
+                    : ""
+                )
+              }
+            >
+              <option value="">Todas</option>
+              <option value="true">Em Promoção</option>
+              <option value="false">Não está em Promoção</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Novidade</label>
+            <select
+              value={isNew}
+              onChange={(e) =>
+                filterByNew(
+                  e.target.value === "true"
+                    ? true
+                    : e.target.value === "false"
+                    ? false
+                    : ""
+                )
+              }
+            >
+              <option value="">Todas</option>
+              <option value="true">Novidade</option>
+              <option value="false">Não é Novidade</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label>Avaliação (Estrelas)</label>
-          <select
-            value={selectedRating}
-            onChange={(e) => filterByRating(e.target.value)}
-          >
-            <option value="">Todas</option>
-            {[1, 2, 3, 4, 5].map((rating) => (
-              <option key={rating} value={rating}>
-                {rating} Estrelas
-              </option>
-            ))}
-          </select>
+        <div className={styles.produtos}>
+          {filteredProdutos.map((produto) => (
+            <ProductCard key={produto.id} produto={produto} />
+          ))}
         </div>
-
-        <div>
-          <label>Ordenar por Preço</label>
-          <select
-            value={priceOrder}
-            onChange={(e) => sortByPrice(e.target.value)}
-          >
-            <option value="">Nenhuma</option>
-            <option value="asc">Menor para Maior</option>
-            <option value="desc">Maior para Menor</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Disponibilidade</label>
-          <select
-            value={availability}
-            onChange={(e) => filterByAvailability(e.target.value === "true")}
-          >
-            <option value="">Todas</option>
-            <option value="true">Disponível</option>
-            <option value="false">Indisponível</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Em Promoção</label>
-          <select
-            value={isOnSale}
-            onChange={(e) => filterBySale(e.target.value === "true")}
-          >
-            <option value="">Todas</option>
-            <option value="true">Em Promoção</option>
-            <option value="false">Não está em Promoção</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Novidade</label>
-          <select
-            value={isNew}
-            onChange={(e) => filterByNew(e.target.value === "true")}
-          >
-            <option value="">Todas</option>
-            <option value="true">Novidade</option>
-            <option value="false">Não é Novidade</option>
-          </select>
-        </div>
-      </div>
-
-      <div className={styles.produtos}>
-        <h2>Produtos</h2>
-        {filteredProdutos.map((produto) => (
-          <ProductCard key={produto.id} produto={produto} />
-        ))}
       </div>
     </div>
   );

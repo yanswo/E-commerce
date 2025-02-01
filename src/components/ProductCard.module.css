@@ -59,7 +59,7 @@
 .wishlistButton button {
   cursor: pointer;
   margin-left: 10px;
-  background-color: none;
+  background-color: rgba(245, 222, 179, 0);
   border: none;
   font-size: 28px;
 }

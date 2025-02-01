@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
-import { WishlistProvider } from "./context/WishlistContext"; // Importando o WishlistProvider
+import { WishlistProvider } from "./context/WishlistContext";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Historico from "./pages/Historico";

@@ -3,15 +3,14 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { useCart } from "../context/CartContext";
-import { useWishlist } from "../context/WishlistContext"; // Importe o WishlistContext
-
+import { useWishlist } from "../context/WishlistContext";
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
   const { dispatch: cartDispatch } = useCart();
-  const { dispatch: wishlistDispatch } = useWishlist(); // Use o WishlistContext
+  const { dispatch: wishlistDispatch } = useWishlist();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -26,11 +25,9 @@ function Login() {
         login(user);
         localStorage.setItem("userId", user.id);
 
-        // Carregar o carrinho do usuário
         const userCart = user.carrinho || [];
         cartDispatch({ type: "SET_CART", payload: userCart });
 
-        // Carregar a wishlist do usuário
         const userWishlist = user.wishlist || [];
         wishlistDispatch({ type: "SET_WISHLIST", payload: userWishlist });
 

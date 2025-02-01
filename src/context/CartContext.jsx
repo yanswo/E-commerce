@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-// CartContext.jsx
 import { createContext, useReducer, useEffect, useContext } from "react";
 
 const CartContext = createContext();

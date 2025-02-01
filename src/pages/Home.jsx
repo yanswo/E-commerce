@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import CartContext from "../context/CartContext";
-import WishlistContext from "../context/WishlistContext"; // Adicione o WishlistContext
+import WishlistContext from "../context/WishlistContext";
 import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function Home() {
   const { dispatch: dispatchCart } = useContext(CartContext);
-  const { wishlist, dispatch: dispatchWishlist } = useContext(WishlistContext); // Use WishlistContext
+  const { wishlist, dispatch: dispatchWishlist } = useContext(WishlistContext);
   const [produtos, setProdutos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const { user, logout } = useAuth();
@@ -43,7 +44,6 @@ function Home() {
     }
   };
 
-  // Função para adicionar ou remover da wishlist
   const toggleWishlist = (produto) => {
     const isInWishlist = wishlist.find((item) => item.id === produto.id);
     if (isInWishlist) {
@@ -61,6 +61,7 @@ function Home() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         handleSearch={handleSearch}
+        produtos={produtos}
       />
 
       <div className={styles.banner}>
@@ -98,7 +99,7 @@ function Home() {
                   ? "Adicionar ao Carrinho"
                   : "Produto Indisponível"}
               </button>
-              {/* Botão de Wishlist */}
+
               <button
                 onClick={() => toggleWishlist(produto)}
                 className={styles.wishlistButton}
@@ -110,29 +111,7 @@ function Home() {
         </div>
       </div>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerSection}>
-            <h4>Sobre Nós</h4>
-            <ul>
-              <li>Nossa História</li>
-              <li>Lojas Físicas</li>
-              <li>Trabalhe Conosco</li>
-            </ul>
-          </div>
-          <div className={styles.footerSection}>
-            <h4>Ajuda</h4>
-            <ul>
-              <li>FAQ</li>
-              <li>Trocas e Devoluções</li>
-              <li>Formas de Pagamento</li>
-            </ul>
-          </div>
-        </div>
-        <div className={styles.footerBottom}>
-          <p>&copy; 2025 E-Store. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

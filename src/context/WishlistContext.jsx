@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useReducer, useEffect, useContext } from "react";
-import { useAuth } from "./AuthContext"; // Importe o AuthContext
+import { useAuth } from "./AuthContext";
 
 const WishlistContext = createContext();
 
@@ -29,10 +29,9 @@ const wishlistReducer = (state, action) => {
 };
 
 export const WishlistProvider = ({ children }) => {
-  const { user } = useAuth(); // Acesse o usuário logado
+  const { user } = useAuth();
   const [wishlist, dispatch] = useReducer(wishlistReducer, []);
 
-  // Carregar a wishlist do backend quando o usuário faz login
   useEffect(() => {
     const fetchWishlist = async () => {
       if (user) {
@@ -46,14 +45,13 @@ export const WishlistProvider = ({ children }) => {
           console.error("Erro ao carregar a wishlist do backend", error);
         }
       } else {
-        dispatch({ type: "CLEAR_WISHLIST" }); // Limpa a wishlist se não houver usuário logado
+        dispatch({ type: "CLEAR_WISHLIST" });
       }
     };
 
     fetchWishlist();
   }, [user]);
 
-  // Sincronizar a wishlist com o backend sempre que ela mudar
   useEffect(() => {
     const syncWishlist = async () => {
       if (user) {

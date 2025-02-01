@@ -1,21 +1,27 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CartDropdown from "../components/CartDropdown";
 import WishlistDropdown from "../components/WishlistDropdown";
 import styles from "./Header.module.css";
 import CartContext from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
-function Header({ user, logout, searchQuery, setSearchQuery, handleSearch }) {
+function Header({
+  user,
+  logout,
+  searchQuery,
+  setSearchQuery,
+  handleSearch,
+  produtos,
+}) {
   const [mostrarMenu, setMostrarMenu] = useState(false);
   const [wishlistOpen, setWishlistOpen] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const navigate = useNavigate();
-  const { dispatch } = useContext(CartContext);
-  const { wishlist } = useWishlist();
+  const { dispatch: cartDispatch } = useContext(CartContext);
+  const { wishlist, dispatch: wishlistDispatch } = useWishlist();
 
   const handleLogout = () => {
     const userId = localStorage.getItem("userId");
@@ -25,15 +31,50 @@ function Header({ user, logout, searchQuery, setSearchQuery, handleSearch }) {
     logout();
   };
 
+  const filteredProducts = (produtos || []).filter((produto) => {
+    if (
+      produto &&
+      typeof produto.nome === "string" &&
+      produto.nome.trim() !== ""
+    ) {
+      return produto.nome.toLowerCase().includes(searchQuery.toLowerCase());
+    }
+    return false;
+  });
+
+  const handleAddToCart = (produto) => {
+    cartDispatch({ type: "ADD_TO_CART", payload: produto });
+  };
+
+  const handleAddToWishlist = (produto) => {
+    wishlistDispatch({ type: "ADD_TO_WISHLIST", payload: produto });
+  };
+
+  useEffect(() => {
+    if (!searchQuery) {
+      setShowSearchResults(false);
+    }
+  }, [searchQuery]);
+
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>E-Store</div>
+      <div className={styles.logo} onClick={() => navigate("/")}>
+        E-Store
+      </div>
       <nav className={styles.nav}>
         <ul>
           <li onClick={() => navigate("/")}>Home</li>
           <li onClick={() => navigate("/produtos")}>Produtos</li>
-          <li>Promoções</li>
-          <li>Contato</li>
+          <li
+            onClick={() =>
+              window.open(
+                "https://www.linkedin.com/in/yan-lucas-03128021a/",
+                "_blank"
+              )
+            }
+          >
+            Contato
+          </li>
         </ul>
       </nav>
 
@@ -51,10 +92,7 @@ function Header({ user, logout, searchQuery, setSearchQuery, handleSearch }) {
                 <button onClick={() => navigate("/historico")}>
                   Histórico
                 </button>
-                <button onClick={() => navigate("/configuracoes")}>
-                  Configurações
-                </button>
-                <button onClick={handleLogout}>Sair</button>{" "}
+                <button onClick={handleLogout}>Sair</button>
               </div>
             )}
           </div>
@@ -74,16 +112,67 @@ function Header({ user, logout, searchQuery, setSearchQuery, handleSearch }) {
             type="text"
             placeholder="Buscar produtos"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setShowSearchResults(true);
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleSearch();
+                setShowSearchResults(false);
               }
             }}
           />
-          <button className={styles.searchButton} onClick={handleSearch}>
-            🔍
-          </button>
+
+          {showSearchResults && searchQuery && (
+            <div className={styles.searchResultsDropdown}>
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((produto) => (
+                  <div key={produto.id} className={styles.searchResultItem}>
+                    <div className={styles.productInfo}>
+                      <img
+                        src={produto.imagem}
+                        alt={produto.nome}
+                        className={styles.productImage}
+                      />
+                      <div className={styles.productDetails}>
+                        <span className={styles.productName}>
+                          {produto.nome}
+                        </span>
+                        <span className={styles.productPrice}>
+                          R$ {produto.preco.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={styles.productActions}>
+                      <button
+                        className={styles.addToCartButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToCart(produto);
+                        }}
+                      >
+                        <FaShoppingCart />
+                      </button>
+                      <button
+                        className={styles.addToWishlistButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToWishlist(produto);
+                        }}
+                      >
+                        <FaHeart />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className={styles.noResults}>
+                  Nenhum produto encontrado
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={styles.icons}>
@@ -96,6 +185,7 @@ function Header({ user, logout, searchQuery, setSearchQuery, handleSearch }) {
                 className={`${styles.heartIcon} ${
                   wishlist.length > 0 ? styles.activeHeart : ""
                 }`}
+                viewBox="0 0 600 600"
               />
             </button>
             {wishlistOpen && <WishlistDropdown />}

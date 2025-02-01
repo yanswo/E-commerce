@@ -81,7 +81,6 @@
   margin-bottom: 15px;
 }
 
-/* Responsivo */
 @media (max-width: 480px) {
   .loginContainer {
     margin: 20px;

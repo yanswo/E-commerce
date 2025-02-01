@@ -134,6 +134,8 @@
   border-radius: 20px;
   padding: 5px 10px;
   background-color: var(--text-light);
+  margin-right: 35px;
+  width: 300px;
 }
 .searchButton {
   border: none;
@@ -157,21 +159,110 @@
 }
 
 .heartIcon {
-  font-size: 22px;
-  color: transparent;
-  stroke: rgb(255, 255, 255);
-  stroke-width: 40px;
+  font-size: 28px;
+  stroke: white;
+  stroke-width: 28px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
   margin-right: 10px;
   margin-top: 10px;
 }
 
 .activeHeart {
+  font-size: 28px;
   color: red;
-  stroke: none;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .cartIcon {
   font-size: 1.5rem;
   cursor: pointer;
   position: relative;
+}
+
+.searchResultsDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.searchResultItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+}
+
+.searchResultItem:hover {
+  background-color: #f5f5f5;
+}
+
+.productInfo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.productImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.productName {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.productPrice {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.productActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.addToCartButton,
+.addToWishlistButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.addToCartButton:hover,
+.addToWishlistButton:hover {
+  color: #007bff;
+}
+
+.noResults {
+  text-align: center;
+  color: #888;
+  padding: 20px 0;
 }
