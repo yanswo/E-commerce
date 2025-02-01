@@ -12,12 +12,12 @@ function Historico() {
       if (user) {
         try {
           const responseHistorico = await fetch(
-            `http://localhost:5000/historico?usuarioId=${user.id}`
+            `https://api-11ed.onrender.com/historico?usuarioId=${user.id}`
           );
           const historicoData = await responseHistorico.json();
 
           const responseProdutos = await fetch(
-            "http://localhost:5000/produtos"
+            "https://api-11ed.onrender.com/produtos"
           );
           const produtosData = await responseProdutos.json();
 

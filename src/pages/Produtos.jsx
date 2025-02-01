@@ -22,7 +22,7 @@ function Produtos({ handleSearch }) {
 
   useEffect(() => {
     const fetchProdutos = async () => {
-      const response = await fetch("http://localhost:5000/produtos");
+      const response = await fetch("https://api-11ed.onrender.com/produtos");
       const data = await response.json();
       setProdutos(data);
       setFilteredProdutos(data);

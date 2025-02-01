@@ -37,7 +37,7 @@ export const WishlistProvider = ({ children }) => {
       if (user) {
         try {
           const response = await fetch(
-            `http://localhost:5000/usuarios/${user.id}`
+            `https://api-11ed.onrender.com/usuarios/${user.id}`
           );
           const data = await response.json();
           dispatch({ type: "SET_WISHLIST", payload: data.wishlist });
@@ -56,7 +56,7 @@ export const WishlistProvider = ({ children }) => {
     const syncWishlist = async () => {
       if (user) {
         try {
-          await fetch(`http://localhost:5000/usuarios/${user.id}`, {
+          await fetch(`https://api-11ed.onrender.com/usuarios/${user.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ wishlist }),

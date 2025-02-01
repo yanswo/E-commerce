@@ -12,7 +12,7 @@ function Cadastro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/usuarios", {
+      const response = await fetch("https://api-11ed.onrender.com/usuarios", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

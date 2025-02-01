@@ -22,7 +22,7 @@ function Home() {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const response = await fetch("http://localhost:5000/produtos");
+        const response = await fetch("https://api-11ed.onrender.com/produtos");
         if (!response.ok) {
           throw new Error("Erro ao carregar produtos");
         }

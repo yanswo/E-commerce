@@ -63,7 +63,7 @@ function Checkout() {
 
   const salvarHistorico = async (compra) => {
     try {
-      const response = await fetch("http://localhost:5000/historico", {
+      const response = await fetch("https://api-11ed.onrender.com/historico", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(compra),

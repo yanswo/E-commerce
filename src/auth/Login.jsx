@@ -16,7 +16,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/usuarios");
+      const response = await fetch("https://api-11ed.onrender.com/usuarios");
       const users = await response.json();
 
       const user = users.find((u) => u.email === email && u.senha === senha);
