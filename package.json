@@ -8,9 +8,11 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start-api": "json-server --watch db.json --port 5000"
+    "start-api": "json-server --watch db.json --port 5000",
+    "start": "concurrently \"vite\" \"json-server --watch db.json --port 5000\""
   },
   "dependencies": {
+    "concurrently": "^9.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
