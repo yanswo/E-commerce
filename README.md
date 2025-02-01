@@ -8,20 +8,30 @@ Este é um projeto de e-commerce básico desenvolvido em React. O objetivo é cr
 - **Adicionar ao carrinho**: É possível adicionar produtos ao carrinho de compras.
 - **Carrinho de compras**: Exibe os produtos adicionados ao carrinho.
 - **Remover do carrinho**: O usuário pode remover produtos do carrinho.
-- **Armazenamento local**: Os itens no carrinho são salvos no `localStorage` para persistência entre sessões.
+- **Favoritar e salvar produtos** : O usuário pode adicionar e remover produtos dos favoritos
+- **Visualizar histórico de compras**: O usuário pode ver o histórico de compra com a conta que foi criada
+- **Filtrar por Categoria de produto**: Na pagina de produtos o usuário pode filtrar por categoria
+- **Pesquisa por produto na barra de pesquisa**: O usuário também pode pesquisar o produto na barra de pesquisa
+- **Simulação de Pagamento**: O usuário pode realizar o pagamento daquele produto e irá para o histórico (dados fictícios)
+  
+
+
 
 ## Tecnologias utilizadas
 
 - **React**: Biblioteca JavaScript para a construção de interfaces de usuário.
 - **React Router**: Gerenciamento de navegação entre páginas.
 - **Context API**: Gerenciamento de estado global para o carrinho.
-- **CSS**: Estilização da interface.
+- **CSS Modules**: Estilização da interface.
+- **JavaScript**: Para a lógica
+- **Json Server**: Para o back-end
+
 
 ## Como rodar o projeto
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/yanswo/E-commerce.git
+    git clone https://github.com/yanswo/e-commerce.git
     ```
 
 2. Navegue até o diretório do projeto:
@@ -36,10 +46,10 @@ Este é um projeto de e-commerce básico desenvolvido em React. O objetivo é cr
 
 4. Rode o projeto:
     ```bash
-    npm start
+    npm run dev
     ```
 
-O projeto estará disponível em `http://localhost:3000`.
+
 
 ## Como contribuir
 
