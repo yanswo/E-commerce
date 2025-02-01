@@ -6,7 +6,7 @@
       "descricao": "Camisa 100% algodão, cores variadas",
       "preco": 99.99,
       "precoOriginal": 129.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=1015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Roupas",
       "emPromocao": true,
@@ -18,7 +18,7 @@
       "nome": "Moletom Capuz",
       "descricao": "Moletom quentinho para o inverno",
       "preco": 149.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1614214191247-5b2d3a734f1b?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Roupas",
       "emPromocao": false,
@@ -30,7 +30,7 @@
       "nome": "Tênis Esportivo",
       "descricao": "Tênis leve e confortável para corrida",
       "preco": 199.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Calçados",
       "emPromocao": false,
@@ -42,7 +42,7 @@
       "nome": "Boné Aba Reta",
       "descricao": "Boné estilo urbano",
       "preco": 59.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1560774358-d727658f457c?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Acessórios",
       "emPromocao": true,
@@ -54,7 +54,7 @@
       "nome": "Jaqueta Jeans",
       "descricao": "Jaqueta jeans clássica",
       "preco": 299.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Roupas",
       "emPromocao": false,
@@ -66,7 +66,7 @@
       "nome": "Óculos de Sol",
       "descricao": "Óculos de sol estilo aviador",
       "preco": 149.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Acessórios",
       "emPromocao": false,
@@ -78,7 +78,7 @@
       "nome": "Sapato Social",
       "descricao": "Sapato social em couro legítimo",
       "preco": 249.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1611937674427-01cd37d36732?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Calçados",
       "emPromocao": true,
@@ -90,7 +90,7 @@
       "nome": "Bolsa Feminina",
       "descricao": "Bolsa estilo carteira",
       "preco": 89.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1583791031288-d48c4326d5da?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Acessórios",
       "emPromocao": false,
@@ -102,7 +102,7 @@
       "nome": "Camisa Estampada",
       "descricao": "Camiseta com estampa exclusiva",
       "preco": 79.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://images.unsplash.com/photo-1602488283247-29bf1f5b148a?q=80&w=986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "disponibilidade": true,
       "categoria": "Roupas",
       "emPromocao": false,
@@ -114,7 +114,7 @@
       "nome": "Camisa Esportiva",
       "descricao": "Uma camisa esportiva leve, respirável. ",
       "preco": 53.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://img.freepik.com/fotos-gratis/jogador-de-futebol_1368-1768.jpg?t=st=1738431738~exp=1738435338~hmac=6da2f35a9ab7033d5364813685d7b64d8c5abb9cc54c5897693415c124ac3895&w=740",
       "disponibilidade": true,
       "categoria": "Roupas",
       "emPromocao": true,
@@ -126,7 +126,7 @@
       "nome": "Chinelo Slide",
       "descricao": "Chinelo confortável para o dia a dia",
       "preco": 49.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://img.freepik.com/fotos-gratis/chapeu-de-palha-bonito-com-flip-flops-azuis-no-fundo-vivido-vibrante-amarelo-vista-do-topo-lay-lay-conceito-de-ferias-de-viagem-de-verao_1220-1850.jpg?t=st=1738431768~exp=1738435368~hmac=b904e6d5b666b49c73dd338154c806b403ca4ff059d4ab8cdfa9632d3eab1616&w=740",
       "disponibilidade": true,
       "categoria": "Calçados",
       "emPromocao": true,
@@ -138,7 +138,7 @@
       "nome": "Meias",
       "descricao": "Meias confortáveis para o dia a dia",
       "preco": 19.99,
-      "imagem": "https://placehold.co/600x400",
+      "imagem": "https://img.freepik.com/fotos-gratis/vista-superior-de-uma-jovem-mulher-calcar-algumas-meias-em-um-dia-frio-para-passar-em-casa-cozy-home-concept_181624-29374.jpg?t=st=1738431797~exp=1738435397~hmac=ca09e9008f34f86f73ee0ec8fbab3e516cb5f33b1d1352253fe9c775eef310f8&w=996",
       "disponibilidade": true,
       "categoria": "Calçados",
       "emPromocao": true,
@@ -253,6 +253,61 @@
       "senha": "123",
       "carrinho": [],
       "wishlist": []
+    },
+    {
+      "id": "54df",
+      "nome": "Teste",
+      "email": "teste@gmail.com",
+      "senha": "123",
+      "carrinho": [],
+      "wishlist": [
+        {
+          "id": "3",
+          "nome": "Tênis Esportivo",
+          "descricao": "Tênis leve e confortável para corrida",
+          "preco": 199.99,
+          "imagem": "https://placehold.co/600x400",
+          "disponibilidade": true,
+          "categoria": "Calçados",
+          "emPromocao": false,
+          "novidade": false,
+          "avaliacao": 4.7
+        },
+        {
+          "id": "4",
+          "nome": "Boné Aba Reta",
+          "descricao": "Boné estilo urbano",
+          "preco": 59.99,
+          "imagem": "https://placehold.co/600x400",
+          "disponibilidade": true,
+          "categoria": "Acessórios",
+          "emPromocao": true,
+          "novidade": false,
+          "avaliacao": 4.2
+        }
+      ]
+    },
+    {
+      "id": "f978",
+      "nome": "Teste",
+      "email": "testes@gmail.com",
+      "senha": "123",
+      "carrinho": [],
+      "wishlist": [
+        {
+          "id": "1",
+          "nome": "Camisa Básica",
+          "descricao": "Camisa 100% algodão, cores variadas",
+          "preco": 99.99,
+          "precoOriginal": 129.99,
+          "imagem": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=1015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "disponibilidade": true,
+          "categoria": "Roupas",
+          "emPromocao": true,
+          "novidade": false,
+          "avaliacao": 4.5
+        }
+      ]
     }
   ],
   "historico": [
@@ -453,6 +508,29 @@
         }
       ],
       "total": 149.99
+    },
+    {
+      "id": "c9bb",
+      "usuarioId": "f978",
+      "data": "2025-02-01T17:52:05.437Z",
+      "produtos": [
+        {
+          "produtoId": "2",
+          "quantidade": 1,
+          "precoUnitario": 149.99
+        },
+        {
+          "produtoId": "3",
+          "quantidade": 1,
+          "precoUnitario": 199.99
+        },
+        {
+          "produtoId": "4",
+          "quantidade": 1,
+          "precoUnitario": 59.99
+        }
+      ],
+      "total": 409.97
     }
   ]
 }

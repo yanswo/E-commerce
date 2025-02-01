@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import CartDropdown from "../components/CartDropdown";
 import WishlistDropdown from "../components/WishlistDropdown";
@@ -22,6 +22,7 @@ function Header({
   const navigate = useNavigate();
   const { dispatch: cartDispatch } = useContext(CartContext);
   const { wishlist, dispatch: wishlistDispatch } = useWishlist();
+  const searchDropdownRef = useRef(null); // Referência para o dropdown de pesquisa
 
   const handleLogout = () => {
     const userId = localStorage.getItem("userId");
@@ -50,11 +51,22 @@ function Header({
     wishlistDispatch({ type: "ADD_TO_WISHLIST", payload: produto });
   };
 
+  // Fecha o dropdown de pesquisa ao clicar fora
   useEffect(() => {
-    if (!searchQuery) {
-      setShowSearchResults(false);
+    function handleClickOutside(event) {
+      if (
+        searchDropdownRef.current &&
+        !searchDropdownRef.current.contains(event.target)
+      ) {
+        setShowSearchResults(false);
+      }
     }
-  }, [searchQuery]);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -107,7 +119,7 @@ function Header({
       </div>
 
       <div className={styles.searchCart}>
-        <div className={styles.searchBar}>
+        <div className={styles.searchBar} ref={searchDropdownRef}>
           <input
             type="text"
             placeholder="Buscar produtos"
